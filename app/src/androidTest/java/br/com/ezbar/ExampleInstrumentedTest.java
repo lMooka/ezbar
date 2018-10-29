@@ -1,4 +1,4 @@
-package baz.com.br.ezbar;
+package br.com.ezbar;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("baz.com.br.ezbar", appContext.getPackageName());
+        assertEquals("br.com.ezbar", appContext.getPackageName());
     }
 }

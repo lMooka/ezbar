@@ -1,4 +1,4 @@
-package baz.com.br.ezbar;
+package br.com.ezbar;
 
 import org.junit.Test;
 
