@@ -8,8 +8,12 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import br.com.ezbar.R;
+import br.com.ezbar.model.business.LoginCredentials;
+import br.com.ezbar.model.service.IServiceListener;
+import br.com.ezbar.model.service.LoginService;
+import br.com.ezbar.model.service.Service;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements IServiceListener {
 
     private TextView mTextMessage;
 
@@ -41,6 +45,22 @@ public class MainActivity extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        LoginService ls = new LoginService(this, new LoginCredentials("Guilherme@gmail.com", "123456"));
+        ls.request();
     }
 
+    @Override
+    public void requestComplete(Service service) {
+        if(service instanceof LoginService) {
+            // login success
+        }
+    }
+
+    @Override
+    public void requestError(Service service) {
+        if(service instanceof LoginService) {
+            // login fail
+        }
+    }
 }

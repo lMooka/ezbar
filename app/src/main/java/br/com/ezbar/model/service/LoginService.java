@@ -9,8 +9,8 @@ public class LoginService extends Service {
 
     private LoginCredentials loginCredentials;
 
-    public LoginService(LoginCredentials auth) {
-        super(new Auth("AuthRequest"));
+    public LoginService(IServiceListener listener, LoginCredentials auth) {
+        super(listener, new Auth("AuthRequest"));
         this.loginCredentials = auth;
     }
 
@@ -22,12 +22,10 @@ public class LoginService extends Service {
 
     @Override
     void done(String data) {
-
     }
 
     @Override
     void error(String error) {
-
     }
 
     @Override

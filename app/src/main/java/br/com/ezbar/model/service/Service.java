@@ -7,8 +7,10 @@ import br.com.ezbar.model.business.Auth;
 public abstract class Service {
 
     private Auth auth;
+    private IServiceListener listener;
 
-    public Service(Auth auth) {
+    public Service(IServiceListener listener, Auth auth) {
+        this.listener = listener;
         this.auth = auth;
     }
 
