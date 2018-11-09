@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1000999659738",
+    "firebase_url": "https://ezbar-app.firebaseio.com",
+    "project_id": "ezbar-app",
+    "storage_bucket": "ezbar-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1000999659738:android:8398cc5976c61719",
+        "android_client_info": {
+          "package_name": "br.com.ezbar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1000999659738-330q8a4csn3nuqh3h5fsmacdpp2jjnkp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEfYVwdyvSi8h66_rOOygZZwSgTf4rvdM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
