@@ -26,15 +26,14 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import br.com.ezbar.R;
 import br.com.ezbar.model.business.LoginCredentials;
 import br.com.ezbar.model.business.User;
-import br.com.ezbar.model.service.Service;
 import br.com.ezbar.model.service.ServiceAuth;
 import br.com.ezbar.model.service.ServiceException;
 import br.com.ezbar.model.service.ServiceProtocol;
 import br.com.ezbar.model.service.ServiceSingleton;
-import br.com.ezbar.model.service.impl.LoginService;
+import br.com.ezbar.model.service.impl.ServiceLogin;
 import br.com.ezbar.model.service.impl.ServiceUser;
 
-public class LoginActivity extends AppCompatActivity implements LoginService.ILoginService, ServiceUser.IServiceUser {
+public class LoginActivity extends AppCompatActivity implements ServiceLogin.ILoginService {
     private SignInButton mSignInButton;
     private GoogleApiClient mGoogleApiClient;
     private GoogleSignInClient mGoogleSignInClient;
@@ -47,7 +46,7 @@ public class LoginActivity extends AppCompatActivity implements LoginService.ILo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
 
         // Configure Google Sign In
@@ -126,12 +125,14 @@ public class LoginActivity extends AppCompatActivity implements LoginService.ILo
     public LoginCredentials actCredentials = new LoginCredentials();
 
     public void updateLoginCreddentials() {
-        LoginService ls = ServiceSingleton.getInstance().getLoginService();
+        ServiceLogin ls = new ServiceLogin(
+                new ServiceProtocol(new ServiceAuth("")),
+                this,
+                actCredentials
+        ).setEmail("guilherme@gmail.com")
+         .setPassword("123456").go();
 
-        LoginCredentials mtdCredentials = new LoginCredentials();
-        LoginCredentials sglCredentials = ServiceSingleton.getInstance().getLoginCredentials();
-
-        ls.request(this, sglCredentials);
+        ls.go();
     }
 
     @Override
@@ -140,14 +141,7 @@ public class LoginActivity extends AppCompatActivity implements LoginService.ILo
     }
 
     @Override
-    public void onUserResult(User user) {
-
-    }
-
-    @Override
     public void serviceError(ServiceException e) {
 
     }
-
-
 }

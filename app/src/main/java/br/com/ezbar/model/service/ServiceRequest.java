@@ -19,8 +19,6 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.ezbar.model.service.impl.LoginService;
-
 
 public class ServiceRequest<M> extends AsyncTask<Void, Void, String> {
 
@@ -31,21 +29,17 @@ public class ServiceRequest<M> extends AsyncTask<Void, Void, String> {
 
     private Service service;
     private RequestMethod requestMethod;
-    private IServiceCallback listener;
-    private M model;
 
-    public ServiceRequest(RequestMethod requestMethod, Service service, IServiceCallback listener, M model) {
+    public ServiceRequest(RequestMethod requestMethod, Service service) {
         this.requestMethod = requestMethod;
         this.service = service;
-        this.listener = listener;
-        this.model = model;
     }
 
     @Override
     protected String doInBackground(Void... params) {
-        Log.d("MyAppNow", service.getClass().getSimpleName() + ": Requesting service from webserivce...");
+        Log.d("MyAppNow", service.getClass().getSimpleName() + ": Requesting service from webservice...");
         try {
-            return requestMethod(service.getUrl(), service.getRequestParams());
+            return requestMethod(service.getUrl(), service.getServiceProtocol().getParams());
         } catch (Exception e) {
             Log.d("MyAppNow", e.getMessage());
             //service.event.onClientError(e);
@@ -59,7 +53,7 @@ public class ServiceRequest<M> extends AsyncTask<Void, Void, String> {
             android.os.Debug.waitForDebugger();
 
         Log.d("MyAppNow", service.getClass().getSimpleName() + ": Triggering webservice done service event...");
-        service.requestDone(data, listener, model);
+        service.done(data);
         Log.d("MyAppNow", service.getClass().getSimpleName() + ": Webservice events triggered.");
     }
 
@@ -69,7 +63,7 @@ public class ServiceRequest<M> extends AsyncTask<Void, Void, String> {
             android.os.Debug.waitForDebugger();
 
         URL url;
-        String response = "";
+        StringBuilder response = new StringBuilder();
 
         if (requestMethod == RequestMethod.post) {
             try {
@@ -82,7 +76,7 @@ public class ServiceRequest<M> extends AsyncTask<Void, Void, String> {
                 conn.setDoInput(true);
                 conn.setDoOutput(true);
 
-                // Escreve parametos
+                // Escreve parametros
                 OutputStream os = conn.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
                 writer.write(getPostDataString(postDataParams));
@@ -96,26 +90,26 @@ public class ServiceRequest<M> extends AsyncTask<Void, Void, String> {
                     BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
                     while ((line = br.readLine()) != null) {
-                        response += line;
+                        response.append(line);
                     }
                 } else {
-                    service.requestError(service.getClass().getSimpleName() + ": HTTP Responde Code: " + serviceCode, listener);
-                    response = "";
+                    service.error(new ServiceException(service, service.getClass().getSimpleName() + ": HTTP Response Code: " + serviceCode));
+                    response.delete(0, response.length());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else if (requestMethod == RequestMethod.get) {
             try {
-                response = doGetRequest(requestURL);
+                response.append(doGetRequest(requestURL));
             } catch (Exception e) {
                 e.printStackTrace();
-                service.requestError(e.getMessage(), listener);
+                service.error(new ServiceException(service, e));
             }
         }
 
         Log.d("MyAppNow", service.getClass().getSimpleName() + ": Webservice service: \n" + service);
-        return response;
+        return response.toString();
     }
 
     private String doGetRequest(String request) {
@@ -139,11 +133,11 @@ public class ServiceRequest<M> extends AsyncTask<Void, Void, String> {
                 while ((line = reader.readLine()) != null)
                     requestResult.append(line);
             } else {
-                service.requestError("HTTP Responde Code: " + httpUrlConnection.getResponseCode(), listener);
+                service.error(new ServiceException(service, "HTTP Response Code: " + httpUrlConnection.getResponseCode()));
                 return null;
             }
         } catch (Exception e) {
-            service.requestError(e.getMessage(), listener);
+            service.error(new ServiceException(service, e));
             return null;
         } finally {
             if (httpUrlConnection != null)
@@ -174,11 +168,11 @@ public class ServiceRequest<M> extends AsyncTask<Void, Void, String> {
 
     private Bitmap baixarImagem(String url) {
         try {
-            URL endereco;
+            URL path;
             InputStream inputStream;
             Bitmap imagem;
-            endereco = new URL(url);
-            inputStream = endereco.openStream();
+            path = new URL(url);
+            inputStream = path.openStream();
             //imagem = Bitmap. (inputStream);
             inputStream.close();
             return null;

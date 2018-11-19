@@ -1,34 +1,44 @@
 package br.com.ezbar.model.service;
-
-import java.util.HashMap;
-
-public abstract class Service<L extends IServiceCallback, M> {
+public abstract class Service<C extends IServiceCallback, M> {
 
     private ServiceProtocol protocol;
     private ServiceRequest.RequestMethod requestMethod;
+    private M model;
+    private C callback;
 
-    protected Service(ServiceProtocol protocol, ServiceRequest.RequestMethod requestMethod) {
+    protected Service(ServiceProtocol protocol, ServiceRequest.RequestMethod requestMethod, C callback, M model) {
         this.protocol = protocol;
         this.requestMethod = requestMethod;
+        this.callback = callback;
+        this.model = model;
     }
 
-    public final void request(L listener, M model) {
-        new ServiceRequest<>(requestMethod, this, listener, model).execute();
+    public final <R extends Service<C, M>> R go() {
+        new ServiceRequest<>(requestMethod, this).execute();
+        return (R)this;
     }
 
-    void requestDone(String data, L listener, M model) {
-        processResult(data, model);
-        ready(listener, model);
+    final void done(String data) {
+        process(data, model);
+        ready(callback, model);
+    }
+    protected abstract void process(String data, M model);
+    protected abstract void ready(C listener, M model);
+    void error(ServiceException e) {
+        getCallback().serviceError(e);
     }
 
-    protected abstract void processResult(String data, M model);
-    protected abstract void ready(L listener, M model);
-    protected abstract void requestError(String error, L listener);
-
-    protected abstract HashMap<String, String> getRequestParams();
     protected abstract String getUrl();
 
-    public ServiceProtocol getServiceProtocol() {
+    protected final ServiceProtocol getServiceProtocol() {
         return protocol;
+    }
+
+    public final M getModel() {
+        return model;
+    }
+
+    private C getCallback() {
+        return callback;
     }
 }
