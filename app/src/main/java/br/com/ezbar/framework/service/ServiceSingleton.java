@@ -1,7 +1,7 @@
-package br.com.ezbar.model.service;
+package br.com.ezbar.framework.service;
 
-import br.com.ezbar.model.business.LoginCredentials;
-import br.com.ezbar.model.service.impl.ServiceLogin;
+import br.com.ezbar.app.business.LoginCredentials;
+import br.com.ezbar.app.service.ServiceLogin;
 
 public class ServiceSingleton {
     private static final ServiceSingleton ourInstance = new ServiceSingleton();

@@ -1,4 +1,4 @@
-package br.com.ezbar.model.business;
+package br.com.ezbar.app.business;
 
 public class LoginCredentials {
     private String username;

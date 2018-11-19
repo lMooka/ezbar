@@ -1,4 +1,4 @@
-package br.com.ezbar.view;
+package br.com.ezbar.activity;
 
 import android.content.Intent;
 import android.os.Bundle;

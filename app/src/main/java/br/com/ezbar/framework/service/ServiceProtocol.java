@@ -1,4 +1,4 @@
-package br.com.ezbar.model.service;
+package br.com.ezbar.framework.service;
 
 import java.util.HashMap;
 

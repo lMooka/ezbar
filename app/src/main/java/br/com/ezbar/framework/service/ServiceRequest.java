@@ -1,4 +1,4 @@
-package br.com.ezbar.model.service;
+package br.com.ezbar.framework.service;
 
 import android.graphics.Bitmap;
 import android.os.AsyncTask;

@@ -1,4 +1,4 @@
-package br.com.ezbar.model.service;
+package br.com.ezbar.framework.service;
 public abstract class Service<C extends IServiceCallback, M> {
 
     private ServiceProtocol protocol;

@@ -1,13 +1,10 @@
-package br.com.ezbar.model.service.impl;
+package br.com.ezbar.app.service;
 
-import java.util.HashMap;
-
-import br.com.ezbar.model.business.LoginCredentials;
-import br.com.ezbar.model.service.IServiceCallback;
-import br.com.ezbar.model.service.Service;
-import br.com.ezbar.model.service.ServiceException;
-import br.com.ezbar.model.service.ServiceProtocol;
-import br.com.ezbar.model.service.ServiceRequest;
+import br.com.ezbar.app.business.LoginCredentials;
+import br.com.ezbar.framework.service.IServiceCallback;
+import br.com.ezbar.framework.service.Service;
+import br.com.ezbar.framework.service.ServiceProtocol;
+import br.com.ezbar.framework.service.ServiceRequest;
 
 public class ServiceLogin extends Service<ServiceLogin.ILoginService, LoginCredentials> {
 

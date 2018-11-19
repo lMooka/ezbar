@@ -1,4 +1,4 @@
-package br.com.ezbar.view;
+package br.com.ezbar.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,14 +24,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import br.com.ezbar.R;
-import br.com.ezbar.model.business.LoginCredentials;
-import br.com.ezbar.model.business.User;
-import br.com.ezbar.model.service.ServiceAuth;
-import br.com.ezbar.model.service.ServiceException;
-import br.com.ezbar.model.service.ServiceProtocol;
-import br.com.ezbar.model.service.ServiceSingleton;
-import br.com.ezbar.model.service.impl.ServiceLogin;
-import br.com.ezbar.model.service.impl.ServiceUser;
+import br.com.ezbar.app.business.LoginCredentials;
+import br.com.ezbar.framework.service.ServiceAuth;
+import br.com.ezbar.framework.service.ServiceException;
+import br.com.ezbar.framework.service.ServiceProtocol;
+import br.com.ezbar.app.service.ServiceLogin;
 
 public class LoginActivity extends AppCompatActivity implements ServiceLogin.ILoginService {
     private SignInButton mSignInButton;
@@ -125,14 +122,12 @@ public class LoginActivity extends AppCompatActivity implements ServiceLogin.ILo
     public LoginCredentials actCredentials = new LoginCredentials();
 
     public void updateLoginCreddentials() {
-        ServiceLogin ls = new ServiceLogin(
+        new ServiceLogin(
                 new ServiceProtocol(new ServiceAuth("")),
                 this,
                 actCredentials
-        ).setEmail("guilherme@gmail.com")
-         .setPassword("123456").go();
+        ).setEmail("guilherme@gmail.com").setPassword("123456").go();
 
-        ls.go();
     }
 
     @Override
