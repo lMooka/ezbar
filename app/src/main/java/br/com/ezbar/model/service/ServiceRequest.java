@@ -19,8 +19,10 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.ezbar.model.service.impl.LoginService;
 
-class ServiceRequest extends AsyncTask<Void, Void, String> {
+
+public class ServiceRequest<M> extends AsyncTask<Void, Void, String> {
 
     public enum RequestMethod {
         get,
@@ -29,10 +31,14 @@ class ServiceRequest extends AsyncTask<Void, Void, String> {
 
     private Service service;
     private RequestMethod requestMethod;
+    private IServiceCallback listener;
+    private M model;
 
-    public ServiceRequest(RequestMethod requestMethod, Service service) {
+    public ServiceRequest(RequestMethod requestMethod, Service service, IServiceCallback listener, M model) {
         this.requestMethod = requestMethod;
         this.service = service;
+        this.listener = listener;
+        this.model = model;
     }
 
     @Override
@@ -53,7 +59,7 @@ class ServiceRequest extends AsyncTask<Void, Void, String> {
             android.os.Debug.waitForDebugger();
 
         Log.d("MyAppNow", service.getClass().getSimpleName() + ": Triggering webservice done service event...");
-        service.done(data);
+        service.requestDone(data, listener, model);
         Log.d("MyAppNow", service.getClass().getSimpleName() + ": Webservice events triggered.");
     }
 
@@ -71,7 +77,7 @@ class ServiceRequest extends AsyncTask<Void, Void, String> {
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout(15000);
                 conn.setConnectTimeout(15000);
-                conn.setRequestProperty("Authorization", service.getAuth().getAuthToken());
+                conn.setRequestProperty("Authorization", service.getServiceProtocol().getServiceAuth().getAuthToken());
                 conn.setRequestMethod("POST");
                 conn.setDoInput(true);
                 conn.setDoOutput(true);
@@ -93,7 +99,7 @@ class ServiceRequest extends AsyncTask<Void, Void, String> {
                         response += line;
                     }
                 } else {
-                    service.error(service.getClass().getSimpleName() + ": HTTP Responde Code: " + serviceCode);
+                    service.requestError(service.getClass().getSimpleName() + ": HTTP Responde Code: " + serviceCode, listener);
                     response = "";
                 }
             } catch (Exception e) {
@@ -104,7 +110,7 @@ class ServiceRequest extends AsyncTask<Void, Void, String> {
                 response = doGetRequest(requestURL);
             } catch (Exception e) {
                 e.printStackTrace();
-                service.error(e.getMessage());
+                service.requestError(e.getMessage(), listener);
             }
         }
 
@@ -119,7 +125,7 @@ class ServiceRequest extends AsyncTask<Void, Void, String> {
         try {
             URL url = new URL(request);
             httpUrlConnection = (HttpURLConnection) url.openConnection();
-            httpUrlConnection.setRequestProperty("Authorization", service.getAuth().getAuthToken());
+            httpUrlConnection.setRequestProperty("Authorization", service.getServiceProtocol().getServiceAuth().getAuthToken());
             InputStream in = new BufferedInputStream(httpUrlConnection.getInputStream());
 
             //verifying if connection result was ok
@@ -133,11 +139,11 @@ class ServiceRequest extends AsyncTask<Void, Void, String> {
                 while ((line = reader.readLine()) != null)
                     requestResult.append(line);
             } else {
-                service.error("HTTP Responde Code: " + httpUrlConnection.getResponseCode());
+                service.requestError("HTTP Responde Code: " + httpUrlConnection.getResponseCode(), listener);
                 return null;
             }
         } catch (Exception e) {
-            service.error(e.getMessage());
+            service.requestError(e.getMessage(), listener);
             return null;
         } finally {
             if (httpUrlConnection != null)

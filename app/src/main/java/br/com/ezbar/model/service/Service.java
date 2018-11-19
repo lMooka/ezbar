@@ -2,26 +2,33 @@ package br.com.ezbar.model.service;
 
 import java.util.HashMap;
 
-import br.com.ezbar.model.business.Auth;
+public abstract class Service<L extends IServiceCallback, M> {
 
-public abstract class Service {
+    private ServiceProtocol protocol;
+    private ServiceRequest.RequestMethod requestMethod;
 
-    private Auth auth;
-    private IServiceListener listener;
-
-    public Service(IServiceListener listener, Auth auth) {
-        this.listener = listener;
-        this.auth = auth;
+    protected Service(ServiceProtocol protocol, ServiceRequest.RequestMethod requestMethod) {
+        this.protocol = protocol;
+        this.requestMethod = requestMethod;
     }
 
-    public abstract void request();
-    abstract void done(String data);
-    abstract void error(String error);
+    public final void request(L listener, M model) {
+        new ServiceRequest<>(requestMethod, this, listener, model).execute();
+    }
 
-    abstract HashMap<String, String> getRequestParams();
-    abstract String getUrl();
+    void requestDone(String data, L listener, M model) {
+        processResult(data, model);
+        ready(listener, model);
+    }
 
-    public Auth getAuth() {
-        return auth;
+    protected abstract void processResult(String data, M model);
+    protected abstract void ready(L listener, M model);
+    protected abstract void requestError(String error, L listener);
+
+    protected abstract HashMap<String, String> getRequestParams();
+    protected abstract String getUrl();
+
+    public ServiceProtocol getServiceProtocol() {
+        return protocol;
     }
 }

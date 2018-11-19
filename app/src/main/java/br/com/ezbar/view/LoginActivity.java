@@ -12,7 +12,6 @@ import android.view.WindowManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -25,8 +24,17 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import br.com.ezbar.R;
+import br.com.ezbar.model.business.LoginCredentials;
+import br.com.ezbar.model.business.User;
+import br.com.ezbar.model.service.Service;
+import br.com.ezbar.model.service.ServiceAuth;
+import br.com.ezbar.model.service.ServiceException;
+import br.com.ezbar.model.service.ServiceProtocol;
+import br.com.ezbar.model.service.ServiceSingleton;
+import br.com.ezbar.model.service.impl.LoginService;
+import br.com.ezbar.model.service.impl.ServiceUser;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements LoginService.ILoginService, ServiceUser.IServiceUser {
     private SignInButton mSignInButton;
     private GoogleApiClient mGoogleApiClient;
     private GoogleSignInClient mGoogleSignInClient;
@@ -114,4 +122,32 @@ public class LoginActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser user) {
         Log.d("ezbar", "logged as " + user.getUid());
     }
+
+    public LoginCredentials actCredentials = new LoginCredentials();
+
+    public void updateLoginCreddentials() {
+        LoginService ls = ServiceSingleton.getInstance().getLoginService();
+
+        LoginCredentials mtdCredentials = new LoginCredentials();
+        LoginCredentials sglCredentials = ServiceSingleton.getInstance().getLoginCredentials();
+
+        ls.request(this, sglCredentials);
+    }
+
+    @Override
+    public void loginResult(LoginCredentials credentials) {
+
+    }
+
+    @Override
+    public void onUserResult(User user) {
+
+    }
+
+    @Override
+    public void serviceError(ServiceException e) {
+
+    }
+
+
 }

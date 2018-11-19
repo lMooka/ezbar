@@ -1,9 +1,9 @@
-package br.com.ezbar.model.business;
+package br.com.ezbar.model.service;
 
-public class Auth {
+public class ServiceAuth {
     private String authToken;
 
-    public Auth(String authToken) {
+    public ServiceAuth(String authToken) {
         this.authToken = authToken;
     }
 
