@@ -3,8 +3,12 @@ package br.com.ezbar.app.service;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 import br.com.ezbar.app.business.LoginCredentials;
 import br.com.ezbar.app.json.MyJsonInjector;
+import br.com.ezbar.framework.json.writer.JsonCache;
+import br.com.ezbar.framework.persistence.Persist;
 import br.com.ezbar.framework.service.IServiceCallback;
 import br.com.ezbar.framework.service.Service;
 import br.com.ezbar.framework.service.ServiceProtocol;
@@ -17,12 +21,34 @@ public class ServiceLogin extends Service<ServiceLogin.ILoginService, LoginCrede
     }
 
     @Override
-    protected void process(String data, LoginCredentials model) {
+    protected boolean before() {
+        JsonCache cache = new JsonCache("ServiceLogin", new Persist(getCallback().getContext()));
+
         try {
-            JSONObject json = new JSONObject(data);
+            JSONObject json = cache.get(getServiceProtocol().getParam("email"));
+
+            if(json == null)
+                return true;
+
+            done(json);
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+    }
+
+    @Override
+    protected void process(JSONObject data, LoginCredentials model) {
+        try {
             MyJsonInjector injector = new MyJsonInjector();
-            injector.inject(model, json);
-        } catch (JSONException | IllegalAccessException e) {
+            injector.inject(model, data);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
     }

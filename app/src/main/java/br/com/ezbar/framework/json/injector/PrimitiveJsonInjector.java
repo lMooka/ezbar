@@ -1,4 +1,4 @@
-package br.com.ezbar.framework.json;
+package br.com.ezbar.framework.json.injector;
 
 public class PrimitiveJsonInjector extends JsonInjector {
     public PrimitiveJsonInjector() {

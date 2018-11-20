@@ -4,8 +4,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import br.com.ezbar.app.business.User;
-import br.com.ezbar.framework.json.JsonInjector;
-import br.com.ezbar.framework.json.JsonInjectorParser;
+import br.com.ezbar.framework.json.injector.JsonInjector;
+import br.com.ezbar.framework.json.injector.JsonInjectorParser;
 
 public class JsonInjectorParserUser extends JsonInjectorParser<User> {
     @Override

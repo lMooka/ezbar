@@ -1,6 +1,6 @@
 package br.com.ezbar.app.business;
 
-import br.com.ezbar.framework.json.JsonAttribute;
+import br.com.ezbar.framework.json.injector.JsonAttribute;
 
 public class User {
 

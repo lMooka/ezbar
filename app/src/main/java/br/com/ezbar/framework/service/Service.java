@@ -1,4 +1,8 @@
 package br.com.ezbar.framework.service;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public abstract class Service<C extends IServiceCallback, M> {
 
     private ServiceProtocol protocol;
@@ -14,16 +18,30 @@ public abstract class Service<C extends IServiceCallback, M> {
     }
 
     public final <R extends Service<C, M>> R go() {
-        new ServiceRequest<>(requestMethod, this).execute();
+        if(before())
+            new ServiceRequest<>(requestMethod, this).execute();
+
         return (R)this;
     }
 
     final void done(String data) {
+        try {
+            process(new JSONObject(data), model);
+            ready(callback, model);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected final void done(JSONObject data) {
         process(data, model);
         ready(callback, model);
     }
 
-    protected abstract void process(String data, M model);
+    protected boolean before() {
+        return true;
+    }
+    protected abstract void process(JSONObject data, M model);
     protected abstract void ready(C listener, M model);
     void error(ServiceException e) {
         getCallback().serviceError(e);
@@ -39,7 +57,7 @@ public abstract class Service<C extends IServiceCallback, M> {
         return model;
     }
 
-    private C getCallback() {
+    protected C getCallback() {
         return callback;
     }
 }

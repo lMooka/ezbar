@@ -1,4 +1,4 @@
-package br.com.ezbar.framework.json;
+package br.com.ezbar.framework.json.injector;
 
 import org.json.JSONException;
 import org.json.JSONObject;
