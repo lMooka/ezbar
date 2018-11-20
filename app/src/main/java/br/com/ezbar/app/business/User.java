@@ -15,6 +15,9 @@ public class User {
     @JsonAttribute(alias = "DS_BIRTHDAY")
     private String birthday;
 
+    @JsonAttribute(alias = "CREDENTIALS")
+    private LoginCredentials credentials;
+
     public User() {
     }
 

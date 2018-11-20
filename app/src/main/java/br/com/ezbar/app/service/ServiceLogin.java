@@ -1,6 +1,10 @@
 package br.com.ezbar.app.service;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import br.com.ezbar.app.business.LoginCredentials;
+import br.com.ezbar.app.json.MyJsonInjector;
 import br.com.ezbar.framework.service.IServiceCallback;
 import br.com.ezbar.framework.service.Service;
 import br.com.ezbar.framework.service.ServiceProtocol;
@@ -14,7 +18,13 @@ public class ServiceLogin extends Service<ServiceLogin.ILoginService, LoginCrede
 
     @Override
     protected void process(String data, LoginCredentials model) {
-
+        try {
+            JSONObject json = new JSONObject(data);
+            MyJsonInjector injector = new MyJsonInjector();
+            injector.inject(model, json);
+        } catch (JSONException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

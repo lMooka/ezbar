@@ -22,6 +22,7 @@ public abstract class Service<C extends IServiceCallback, M> {
         process(data, model);
         ready(callback, model);
     }
+
     protected abstract void process(String data, M model);
     protected abstract void ready(C listener, M model);
     void error(ServiceException e) {
