@@ -1,5 +1,6 @@
 package br.com.ezbar.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -137,6 +138,6 @@ public class LoginActivity extends AppCompatActivity implements ServiceLogin.ILo
 
     @Override
     public void serviceError(ServiceException e) {
-
     }
+
 }

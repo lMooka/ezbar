@@ -22,16 +22,15 @@ public class ServiceLogin extends Service<ServiceLogin.ILoginService, LoginCrede
 
     @Override
     protected boolean before() {
-        JsonCache cache = new JsonCache("ServiceLogin", new Persist(getCallback().getContext()));
+        JsonCache cache = new JsonCache("ServiceLogin", new Persist(getCallback().getApplicationContext()));
 
         try {
             JSONObject json = cache.get(getServiceProtocol().getParam("email"));
 
-            if(json == null)
-                return true;
-
-            done(json);
-            return false;
+            if(json!= null) {
+                done(json);
+                return false;
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {

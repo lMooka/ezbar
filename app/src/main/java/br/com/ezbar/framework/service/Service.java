@@ -26,8 +26,7 @@ public abstract class Service<C extends IServiceCallback, M> {
 
     final void done(String data) {
         try {
-            process(new JSONObject(data), model);
-            ready(callback, model);
+            done(new JSONObject(data));
         } catch (JSONException e) {
             e.printStackTrace();
         }

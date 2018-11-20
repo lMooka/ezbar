@@ -1,8 +1,12 @@
 package br.com.ezbar.app.business;
 
-import br.com.ezbar.framework.json.injector.JsonAttribute;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class User {
+import br.com.ezbar.framework.json.injector.JsonAttribute;
+import br.com.ezbar.framework.json.writer.IJsonWritable;
+
+public class User implements IJsonWritable {
 
     @JsonAttribute(alias = "ID_USER")
     private int userId;
@@ -67,5 +71,21 @@ public class User {
 
     public void setBirthday(String birthday) {
         this.birthday = birthday;
+    }
+
+    @Override
+    public String getJsonName() {
+        return email;
+    }
+
+    @Override
+    public JSONObject getJson() {
+        try {
+            return new JSONObject("{userid, email, firstname, secondname, birthday}");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

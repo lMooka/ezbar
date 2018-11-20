@@ -1,5 +1,7 @@
 package br.com.ezbar.app.service;
 
+import org.json.JSONObject;
+
 import br.com.ezbar.app.business.User;
 import br.com.ezbar.framework.service.IServiceCallback;
 import br.com.ezbar.framework.service.Service;
@@ -13,7 +15,7 @@ public class ServiceUser extends Service<ServiceUser.IServiceUser, User> {
     }
 
     @Override
-    protected void process(String data, User model) {
+    protected void process(JSONObject data, User model) {
 
     }
 
