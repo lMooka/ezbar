@@ -24,6 +24,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import br.com.ezbar.R;
+import br.com.ezbar.app.business.User;
+import br.com.ezbar.app.business.UserAuthentication;
 import br.com.ezbar.app.service.ServiceUserAuthentication;
 import br.com.ezbar.framework.service.ServiceAuth;
 import br.com.ezbar.framework.service.ServiceException;
@@ -118,24 +120,17 @@ public class LoginActivity extends AppCompatActivity implements ServiceUserAuthe
         Log.d("ezbar", "logged as " + user.getUid());
     }
 
-    public LoginCredentials actCredentials = new LoginCredentials();
-
-    public void updateLoginCreddentials() {
-        new ServiceUserAuthentication(
-                new ServiceProtocol(new ServiceAuth("")),
-                this,
-                actCredentials
-        ).setEmail("guilherme@gmail.com").setPassword("123456").go();
-
-    }
-
-    @Override
-    public void loginResult(LoginCredentials credentials) {
-
-    }
-
     @Override
     public void serviceError(ServiceException e) {
     }
 
+    @Override
+    public void onUserAuthentication(UserAuthentication auth) {
+
+    }
+
+    @Override
+    public void onUserReceived(User user) {
+
+    }
 }
