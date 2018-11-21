@@ -1,0 +1,30 @@
+{
+  "request": {
+    "credentials_type": "email | token",
+    "credentials": "email&password | token_value"
+  },
+
+  "response": {
+    /* usado para fazer as próximas requisições no webservice*/
+    "authentication": {
+      /* encripitação base64 hash token */
+      "token" : "(String)",
+      /* timestamp de quando o token foi gerado */
+      "creation_date" : "(String)",
+      /* tempo válido do token em segundos */
+      "valid_time" : "(Integer)"
+    },
+    "user": {
+      "userId": "(Integer)",
+      "email": "(String)",
+      "firstName": "(String)",
+      "secondName": "(String)",
+      "birthday": "(String)"
+    }
+  },
+
+  "error": {
+    "errorId" : "(Integer)",
+    "errorMessage" : "(String)"
+  }
+}

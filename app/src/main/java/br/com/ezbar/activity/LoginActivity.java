@@ -1,6 +1,5 @@
 package br.com.ezbar.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,13 +24,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import br.com.ezbar.R;
-import br.com.ezbar.app.business.LoginCredentials;
+import br.com.ezbar.app.service.ServiceUserAuthentication;
 import br.com.ezbar.framework.service.ServiceAuth;
 import br.com.ezbar.framework.service.ServiceException;
 import br.com.ezbar.framework.service.ServiceProtocol;
-import br.com.ezbar.app.service.ServiceLogin;
 
-public class LoginActivity extends AppCompatActivity implements ServiceLogin.ILoginService {
+public class LoginActivity extends AppCompatActivity implements ServiceUserAuthentication.ILoginService {
     private SignInButton mSignInButton;
     private GoogleApiClient mGoogleApiClient;
     private GoogleSignInClient mGoogleSignInClient;
@@ -123,7 +121,7 @@ public class LoginActivity extends AppCompatActivity implements ServiceLogin.ILo
     public LoginCredentials actCredentials = new LoginCredentials();
 
     public void updateLoginCreddentials() {
-        new ServiceLogin(
+        new ServiceUserAuthentication(
                 new ServiceProtocol(new ServiceAuth("")),
                 this,
                 actCredentials

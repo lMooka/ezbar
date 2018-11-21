@@ -8,19 +8,16 @@ import br.com.ezbar.framework.json.writer.IJsonWritable;
 
 public class User implements IJsonWritable {
 
-    @JsonAttribute(alias = "ID_USER")
+    @JsonAttribute(alias = "userId")
     private int userId;
-    @JsonAttribute(alias = "DS_EMAIL")
+    @JsonAttribute(alias = "email")
     private String email;
-    @JsonAttribute(alias = "DS_FIRST_NAME")
+    @JsonAttribute(alias = "firstName")
     private String firstName;
-    @JsonAttribute(alias = "DS_SECOND_NAME")
+    @JsonAttribute(alias = "secondName")
     private String secondName;
-    @JsonAttribute(alias = "DS_BIRTHDAY")
+    @JsonAttribute(alias = "birthday")
     private String birthday;
-
-    @JsonAttribute(alias = "CREDENTIALS")
-    private LoginCredentials credentials;
 
     public User() {
     }

@@ -12,6 +12,11 @@ public class JsonInjectorParserUser extends JsonInjectorParser<User> {
     protected User getValue(JsonInjector injector, String valueName, JSONObject value) throws JSONException {
         User user = new User();
 
+        try {
+            injector.inject(injector, value);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
 
         return user;
     }

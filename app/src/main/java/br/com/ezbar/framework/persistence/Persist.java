@@ -4,11 +4,9 @@ import android.content.Context;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 
 public class Persist {
 
@@ -24,7 +22,7 @@ public class Persist {
         fos.close();
     }
 
-    public String readInternalStorage(String fileName) throws FileNotFoundException, UnsupportedEncodingException, IOException {
+    public String readInternalStorage(String fileName) throws IOException {
         FileInputStream fis = context.openFileInput(fileName);
         InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
         BufferedReader bufferedReader = new BufferedReader(isr);
