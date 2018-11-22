@@ -15,7 +15,7 @@ public abstract class Service<C extends IServiceCallback> {
         this.callback = callback;
     }
 
-    public final <R extends Service<C>> R go() throws ServiceException {
+    public final <R extends Service<C>> R run() throws ServiceException {
         if(before())
             new ServiceRequest<>(requestMethod, this).execute();
 

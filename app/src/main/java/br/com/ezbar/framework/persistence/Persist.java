@@ -28,6 +28,7 @@ public class Persist {
         BufferedReader bufferedReader = new BufferedReader(isr);
         StringBuilder sb = new StringBuilder();
         String line;
+
         while ((line = bufferedReader.readLine()) != null) {
             sb.append(line);
         }

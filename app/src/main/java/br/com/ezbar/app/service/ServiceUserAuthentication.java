@@ -17,6 +17,7 @@ public class ServiceUserAuthentication extends Service<ServiceUserAuthentication
     private UserAuthentication userAuth;
     private User user;
 
+
     public ServiceUserAuthentication(ServiceProtocol protocol, ILoginService callback) {
         super(protocol, ServiceRequest.RequestMethod.post, callback);
     }
@@ -26,6 +27,8 @@ public class ServiceUserAuthentication extends Service<ServiceUserAuthentication
         if(getServiceProtocol().getParam("post") == null) {
             throw new ServiceException(this, "Credentials was not set. Please use setCredentials() method before.");
         }
+
+
 
         return true;
     }
@@ -72,7 +75,7 @@ public class ServiceUserAuthentication extends Service<ServiceUserAuthentication
 
         getServiceProtocol().setParamValue(
                 "json",
-                String.format("{'request':{'credentials_type':'email','credentials':'%s'}", credentials)
+                String.format("{'request':{'credentialsType':'email','credentials':'%s'}", credentials)
         );
         return this;
     }

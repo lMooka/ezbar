@@ -8,7 +8,7 @@ import br.com.ezbar.R;
 import br.com.ezbar.app.business.User;
 import br.com.ezbar.framework.service.ServiceException;
 
-public class MainActivity extends AppCompatActivity implements ServiceUser.IServiceUser {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,15 +20,5 @@ public class MainActivity extends AppCompatActivity implements ServiceUser.IServ
     protected void onStart() {
         super.onStart();
         startActivity(new Intent(this, LoginActivity.class));
-    }
-
-    @Override
-    public void onUserResult(User user) {
-
-    }
-
-    @Override
-    public void serviceError(ServiceException e) {
-
     }
 }
