@@ -4,6 +4,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import br.com.ezbar.app.business.Placeholder;
+import br.com.ezbar.app.json.MyJsonInjector;
+import br.com.ezbar.framework.json.injector.JsonInjector;
+import br.com.ezbar.framework.json.injector.PrimitiveJsonInjector;
 import br.com.ezbar.framework.service.IServiceCallback;
 import br.com.ezbar.framework.service.Service;
 import br.com.ezbar.framework.service.ServiceRequest;
@@ -20,13 +23,13 @@ public class ServicePlaceholder extends Service<ServicePlaceholder.IServicePlace
     protected void process(JSONObject data) {
         placeholder = new Placeholder();
 
+        JsonInjector injector = new PrimitiveJsonInjector();
+
         try {
-            placeholder.setUserId(data.getInt("userId"));
-            placeholder.setId(data.getInt("id"));
-            placeholder.setTitle(data.getString("title"));
-            placeholder.setBody(data.getString("body"));
+            injector.inject(placeholder, data);
         } catch (JSONException e) {
-            placeholder = null;
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
     }

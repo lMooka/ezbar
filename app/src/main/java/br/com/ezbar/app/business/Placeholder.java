@@ -1,10 +1,16 @@
 package br.com.ezbar.app.business;
 
+import br.com.ezbar.framework.json.injector.JsonAttribute;
+
 public class Placeholder {
 
+    @JsonAttribute(alias = "userId")
     private int userId;
+    @JsonAttribute(alias = "id")
     private int id;
+    @JsonAttribute(alias = "title")
     private String title;
+    @JsonAttribute(alias = "body")
     private String body;
 
     public int getUserId() {
