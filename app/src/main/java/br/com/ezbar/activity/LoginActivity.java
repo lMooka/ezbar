@@ -24,14 +24,16 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import br.com.ezbar.R;
+import br.com.ezbar.app.business.Placeholder;
 import br.com.ezbar.app.business.User;
 import br.com.ezbar.app.business.UserAuthentication;
+import br.com.ezbar.app.service.ServicePlaceholder;
 import br.com.ezbar.app.service.ServiceUserAuthentication;
 import br.com.ezbar.framework.service.ServiceAuth;
 import br.com.ezbar.framework.service.ServiceException;
 import br.com.ezbar.framework.service.ServiceProtocol;
 
-public class LoginActivity extends AppCompatActivity implements ServiceUserAuthentication.ILoginService {
+public class LoginActivity extends AppCompatActivity implements ServiceUserAuthentication.ILoginService, ServicePlaceholder.IServicePlaceholder {
     private SignInButton mSignInButton;
     private GoogleApiClient mGoogleApiClient;
     private GoogleSignInClient mGoogleSignInClient;
@@ -131,6 +133,11 @@ public class LoginActivity extends AppCompatActivity implements ServiceUserAuthe
 
     @Override
     public void onUserReceived(User user) {
+
+    }
+
+    @Override
+    public void onPlaceholder(Placeholder placeholder) {
 
     }
 }

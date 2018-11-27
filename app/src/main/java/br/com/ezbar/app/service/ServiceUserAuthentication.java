@@ -18,8 +18,8 @@ public class ServiceUserAuthentication extends Service<ServiceUserAuthentication
     private User user;
 
 
-    public ServiceUserAuthentication(ServiceProtocol protocol, ILoginService callback) {
-        super(protocol, ServiceRequest.RequestMethod.post, callback);
+    public ServiceUserAuthentication(ILoginService callback) {
+        super(ServiceRequest.RequestMethod.post, callback);
     }
 
     @Override
@@ -27,8 +27,6 @@ public class ServiceUserAuthentication extends Service<ServiceUserAuthentication
         if(getServiceProtocol().getParam("post") == null) {
             throw new ServiceException(this, "Credentials was not set. Please use setCredentials() method before.");
         }
-
-
 
         return true;
     }

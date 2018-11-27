@@ -24,7 +24,10 @@ public class ServiceRequest<M> extends AsyncTask<Void, Void, String> {
 
     public enum RequestMethod {
         get,
-        post
+        post,
+        put,
+        patch,
+        delete
     }
 
     private Service service;
@@ -65,14 +68,21 @@ public class ServiceRequest<M> extends AsyncTask<Void, Void, String> {
         URL url;
         StringBuilder response = new StringBuilder();
 
-        if (requestMethod == RequestMethod.post) {
+        if (requestMethod == RequestMethod.get) {
+            try {
+                response.append(doGetRequest(requestURL));
+            } catch (Exception e) {
+                e.printStackTrace();
+                service.error(new ServiceException(service, e));
+            }
+        } else {
             try {
                 url = new URL(requestURL);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout(15000);
                 conn.setConnectTimeout(15000);
                 conn.setRequestProperty("Authorization", service.getServiceProtocol().getServiceAuth().getAuthToken());
-                conn.setRequestMethod("POST");
+                conn.setRequestMethod(requestMethod.toString().toUpperCase());
                 conn.setDoInput(true);
                 conn.setDoOutput(true);
 
@@ -98,13 +108,6 @@ public class ServiceRequest<M> extends AsyncTask<Void, Void, String> {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-            }
-        } else if (requestMethod == RequestMethod.get) {
-            try {
-                response.append(doGetRequest(requestURL));
-            } catch (Exception e) {
-                e.printStackTrace();
-                service.error(new ServiceException(service, e));
             }
         }
 
@@ -137,6 +140,7 @@ public class ServiceRequest<M> extends AsyncTask<Void, Void, String> {
                 return null;
             }
         } catch (Exception e) {
+            e.printStackTrace();
             service.error(new ServiceException(service, e));
             return null;
         } finally {
