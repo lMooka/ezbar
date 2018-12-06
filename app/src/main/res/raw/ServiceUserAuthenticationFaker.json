@@ -1,0 +1,16 @@
+{
+  "response": {
+    "authentication": {
+      "token": "A1B2C3",
+      "creationDate": "06/12/2018",
+      "validTime": "9999999999"
+    },
+    "user": {
+      "userId": "1",
+      "email": "guilherme.sdes@gmail.com",
+      "firstName": "Guilherme",
+      "secondName": "Silva de Souza",
+      "birthday": "20/08/1991"
+    }
+  }
+}
