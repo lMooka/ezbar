@@ -9,7 +9,12 @@ import br.com.ezbar.framework.persistence.file.AssetReader;
 import br.com.ezbar.framework.service.ServiceFaker;
 
 public class ServiceFakerBuilder {
-    public void build(Context context) {
+    private static boolean isBuilt = false;
+
+    public static void build(Context context) {
+        if(isBuilt)
+            return;
+
         AssetReader ar = new AssetReader(context);
         try {
 
@@ -18,5 +23,7 @@ public class ServiceFakerBuilder {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        isBuilt = true;
     }
 }

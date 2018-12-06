@@ -6,6 +6,7 @@ import android.util.Log;
 
 import br.com.ezbar.R;
 import br.com.ezbar.app.business.Placeholder;
+import br.com.ezbar.app.service.ServiceFakerBuilder;
 import br.com.ezbar.app.service.ServicePlaceholder;
 import br.com.ezbar.framework.service.ServiceException;
 
@@ -20,6 +21,9 @@ public class MainActivity extends AppCompatActivity implements ServicePlaceholde
     @Override
     protected void onStart() {
         super.onStart();
+
+        ServiceFakerBuilder.build(getApplicationContext());
+
         ServicePlaceholder servicePlaceholder = new ServicePlaceholder(this);
         servicePlaceholder.run();
     }
