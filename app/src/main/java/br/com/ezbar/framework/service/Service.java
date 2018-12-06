@@ -3,7 +3,7 @@ package br.com.ezbar.framework.service;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public abstract class Service<C extends IServiceCallback> {
+public abstract class Service<C extends IServiceResponse> {
 
     private ServiceProtocol protocol;
     private ServiceRequest.RequestMethod requestMethod;
@@ -18,7 +18,7 @@ public abstract class Service<C extends IServiceCallback> {
     public final <R extends Service<C>> R run() {
         try {
             if(before())
-                new ServiceRequest<>(requestMethod, this).execute();
+                new ServiceRequest(requestMethod, this).execute();
         } catch (ServiceException e) {
             e.printStackTrace();
             error(e);

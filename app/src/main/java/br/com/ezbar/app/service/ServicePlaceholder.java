@@ -4,10 +4,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import br.com.ezbar.app.business.Placeholder;
-import br.com.ezbar.app.json.MyJsonInjector;
 import br.com.ezbar.framework.json.injector.JsonInjector;
 import br.com.ezbar.framework.json.injector.PrimitiveJsonInjector;
-import br.com.ezbar.framework.service.IServiceCallback;
+import br.com.ezbar.framework.service.IServiceResponse;
 import br.com.ezbar.framework.service.Service;
 import br.com.ezbar.framework.service.ServiceRequest;
 
@@ -44,7 +43,7 @@ public class ServicePlaceholder extends Service<ServicePlaceholder.IServicePlace
         return "https://jsonplaceholder.typicode.com/posts/1";
     }
 
-    public interface IServicePlaceholder extends IServiceCallback {
+    public interface IServicePlaceholder extends IServiceResponse {
         void onPlaceholder(Placeholder placeholder);
     }
 }

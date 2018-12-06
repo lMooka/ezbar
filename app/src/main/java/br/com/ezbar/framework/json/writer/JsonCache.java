@@ -4,7 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
 
-import br.com.ezbar.framework.persistence.Persist;
+import br.com.ezbar.framework.persistence.file.Persist;
 
 public class JsonCache {
 

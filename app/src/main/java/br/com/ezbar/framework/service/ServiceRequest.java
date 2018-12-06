@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -20,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class ServiceRequest<M> extends AsyncTask<Void, Void, String> {
+public class ServiceRequest extends AsyncTask<Void, Void, String> {
 
     public enum RequestMethod {
         get,
@@ -40,6 +42,14 @@ public class ServiceRequest<M> extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... params) {
+
+        if(ServiceFaker.isFakerEnabled) {
+            JSONObject json = ServiceFaker.get(service.getUrl());
+
+            if(json != null)
+                service.done(json);
+        }
+
         Log.d("MyAppNow", service.getClass().getSimpleName() + ": Requesting service from webservice...");
         try {
             return requestMethod(service.getUrl(), service.getServiceProtocol().getParams());

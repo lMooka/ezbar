@@ -6,10 +6,9 @@ import org.json.JSONObject;
 import br.com.ezbar.app.business.User;
 import br.com.ezbar.app.business.UserAuthentication;
 import br.com.ezbar.app.json.MyJsonInjector;
-import br.com.ezbar.framework.service.IServiceCallback;
+import br.com.ezbar.framework.service.IServiceResponse;
 import br.com.ezbar.framework.service.Service;
 import br.com.ezbar.framework.service.ServiceException;
-import br.com.ezbar.framework.service.ServiceProtocol;
 import br.com.ezbar.framework.service.ServiceRequest;
 
 public class ServiceUserAuthentication extends Service<ServiceUserAuthentication.ILoginService> {
@@ -88,7 +87,7 @@ public class ServiceUserAuthentication extends Service<ServiceUserAuthentication
         return this;
     }
 
-    public interface ILoginService extends IServiceCallback {
+    public interface ILoginService extends IServiceResponse {
         void onUserAuthentication(UserAuthentication auth);
 
         void onUserReceived(User user);

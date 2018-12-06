@@ -1,4 +1,4 @@
-package br.com.ezbar.framework.persistence;
+package br.com.ezbar.framework.persistence.file;
 
 import android.content.Context;
 
