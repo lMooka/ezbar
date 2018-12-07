@@ -3,7 +3,7 @@ package br.com.ezbar.app.business;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import br.com.ezbar.framework.json.injector.JsonAttribute;
+import br.com.ezbar.framework.json.JsonAttribute;
 import br.com.ezbar.framework.json.writer.IJsonWritable;
 
 public class User implements IJsonWritable {

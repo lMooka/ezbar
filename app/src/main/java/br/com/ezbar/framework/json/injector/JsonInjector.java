@@ -6,6 +6,8 @@ import org.json.JSONObject;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 
+import br.com.ezbar.framework.json.JsonAttribute;
+
 public class JsonInjector {
 
     private HashMap<Class<?>, JsonInjectorParser> parsers;

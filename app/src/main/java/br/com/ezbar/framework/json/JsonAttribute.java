@@ -1,4 +1,4 @@
-package br.com.ezbar.framework.json.injector;
+package br.com.ezbar.framework.json;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
